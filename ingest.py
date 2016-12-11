@@ -20,7 +20,7 @@ def main(argv):
 
 def producer():
     import producer
-    producer.producer_say_hello()
+    producer.start_stream()
 
 def consumer():
     import consumer
