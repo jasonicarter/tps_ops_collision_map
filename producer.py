@@ -2,15 +2,13 @@ import tweepy
 from tweepy.auth import OAuthHandler
 from tweepy import Stream
 from tweepy.streaming import StreamListener
+from pykafka import KafkaClient
 
 
-consumer_key = 'xaaAErGrUEHURJNSrK0y2U4Lw'
-consumer_secret = 'M35WlGRqkkW4ThmP7ax6e4YhlK4kd1vaY0nI0piJv3lCDgSO79'
-access_token = '1035956736-NONVN9QwEcnUdUfoCVx1dX7GiOuxYrf6ILXfw7d'
-access_secret = 'oCpeAL5ch5uRlTjOSah8Xz5reiDsY1lRgAIfd2Q6tQlNI'
-
-def producer_say_hello():
-    print("Hello World, from Producer")
+consumer_key = ''
+consumer_secret = ''
+access_token = ''
+access_secret = ''
 
 class TPSOpsStreamListener(StreamListener):
 
@@ -25,6 +23,9 @@ class TPSOpsStreamListener(StreamListener):
         if status_code == 420:
             print("Rate limited")
             return False
+
+def producer_say_hello():
+    print("Hello World, from Producer")
 
 def start_stream():
     auth = OAuthHandler(consumer_key, consumer_secret)
