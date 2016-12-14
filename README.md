@@ -18,7 +18,20 @@ docker run -d --name kafka --link zookeeper:zookeeper ches/kafka
 ```
 `--link` is [deprecated](https://docs.docker.com/engine/userguide/networking/default_network/dockerlinks/)
 
-2. Build ```ingest.py``` and run ```producer``` and ```consumer```
+2. Get ip address (TODO: make this process simpler)
+
+```bash
+ZK_IP=$(docker inspect --format '{{ .NetworkSettings.IPAddress }}' zookeeper)
+KAFKA_IP=$(docker inspect --format '{{ .NetworkSettings.IPAddress }}' kafka)
+```
+
+3. Create Kafka topic
+
+```bash
+docker run --rm ches/kafka kafka-topics.sh --create --topic [test] --replication-factor 1 --partitions 1 --zookeeper $ZK_IP:2181
+```
+
+4. Build ```ingest.py``` and run ```producer``` and ```consumer```
 
 Building Python environment with pykafka
 ```bash
