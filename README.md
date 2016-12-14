@@ -28,6 +28,7 @@ docker run -d --name kafka --link zookeeper:zookeeper ches/kafka
 ```bash
 ZK_IP=$(docker inspect --format '{{ .NetworkSettings.IPAddress }}' zookeeper)
 KAFKA_IP=$(docker inspect --format '{{ .NetworkSettings.IPAddress }}' kafka)
+echo $ZK_IP, KAFKA_IP
 ```
 
 3. Create Kafka topic
