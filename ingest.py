@@ -21,7 +21,7 @@ def main(argv):
 def producer():
     import producer
     # import tweets
-    producer.producer_init("IPAddress", "tps_ops")
+    producer.producer_init("172.17.0.3", "tps_ops")
     producer.produce_msg() # tweets.start_stream
 
 def consumer():
