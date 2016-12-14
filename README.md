@@ -12,6 +12,11 @@ A Toronto traffic collision map based on tweets by TPS Operations.
 
 1. Start up both Zookeeper and Kafka
 
+[Optional] Make sure nothing is running or names are not in use by other containers
+- List all running processes `docker ps` and `docker stop [container]` if running
+- Delete all containers `docker rm $(docker ps -a -q)`
+- Delete all images `docker rmi $(docker images -q)`
+
 ```bash
 docker run -d -p 2181:2181 --name zookeeper jplock/zookeeper
 docker run -d --name kafka --link zookeeper:zookeeper ches/kafka
