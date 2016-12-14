@@ -13,20 +13,19 @@ def main(argv):
         elif opt in ("-t", "--test"):
             print(arg)
         elif opt in ("-r", "--run"):
+            # TODO: add ipaddress and topic as args could also be global
             if arg == "producer":
-                producer() # TODO: add ipaddress and topic
+                producer()
             else:
                 consumer()
 
 def producer():
     import producer
-    # import tweets
-    producer.producer_init("172.17.0.3", "tps_ops")
-    producer.produce_msg() # tweets.start_stream
+    producer.produce_msg("172.17.0.3", b'tps_ops') # producer.start_stream
 
 def consumer():
     import consumer
-    consumer.consumer_say_hello()
+    consumer.consume_msg("172.17.0.3", b'tps_ops')
 
 if __name__ == '__main__':
     main(sys.argv[1:])

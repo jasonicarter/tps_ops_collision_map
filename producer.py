@@ -40,17 +40,18 @@ def start_stream():
 def producer_say_hello():
     print("Hello World, from Producer")
 
-def producer_init(ip_address, topic):
+def produce_msg(ip_address, k_topic, *message):
     # TODO: set 9092 as default and add to ip_address
-    client = KafkaClient(ip_address + ":9092")
-    topic = client.topics[topic]
+    # TypeError: ("Producer.produce accepts a bytes object as message, but it got '%s'", <class 'str'>)
+    # TypeError: a bytes-like object is required, not 'str'
+    client = KafkaClient(hosts='172.17.0.3:9092') #b'172.17.0.3:9092', b'tps_ops'
+    topic = client.topics[b'tps_ops']
 
-def produce_msg(*message):
     with topic.get_producer() as producer: # topic.get_producer(sync=True)
         if not message:
             for i in range(4): # while not your_app.needs_stopping:
-                test_message = "test message " + str(i ** 2)
-                producer.produce(test_message)
+                test_message = 'test message ' + str(i ** 2)
+                producer.produce(str.encode(test_message))
                 print(test_message)
         else:
             producer.produce(message)
