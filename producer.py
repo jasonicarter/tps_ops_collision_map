@@ -4,7 +4,6 @@ from tweepy import Stream
 from tweepy.streaming import StreamListener
 from pykafka import KafkaClient
 
-
 consumer_key = ''
 consumer_secret = ''
 access_token = ''
@@ -41,6 +40,12 @@ def start_stream():
         print("error") # print exception
         tps_streaming.disconnect()
 
-def send_msg(message):
-    print("producer")
-    print(message)
+def produce_msg(message):
+
+    # TODO: need to pass in docker container ip and kafka topic
+    client = KafkaClient("IPAddress:9092")
+    topic = client.topics["tps_ops"]
+
+    with topic.get_producer() as producer: # topic.get_producer(sync=True)
+        for i in range(4): # while not your_app.needs_stopping:
+            producer.produce('test message ' + str(i ** 2))
