@@ -40,12 +40,15 @@ def start_stream():
         print("error") # print exception
         tps_streaming.disconnect()
 
-def produce_msg(message):
-
+def producer_init(ip_address, topic):
     # TODO: need to pass in docker container ip and kafka topic
-    client = KafkaClient("IPAddress:9092")
-    topic = client.topics["tps_ops"]
+    client = KafkaClient(ip_address + ":9092")
+    topic = client.topics[topic]
 
+def produce_msg(*message):
     with topic.get_producer() as producer: # topic.get_producer(sync=True)
-        for i in range(4): # while not your_app.needs_stopping:
-            producer.produce('test message ' + str(i ** 2))
+        if not message:
+            for i in range(4): # while not your_app.needs_stopping:
+                producer.produce('test message ' + str(i ** 2))
+        else:
+            producer.produce(message)

@@ -14,13 +14,15 @@ def main(argv):
             print(arg)
         elif opt in ("-r", "--run"):
             if arg == "producer":
-                producer()
+                producer() # TODO: add ipaddress and topic
             else:
                 consumer()
 
 def producer():
     import producer
-    producer.start_stream()
+    # import tweets
+    producer.producer_init("IPAddress", "tps_ops")
+    producer.produce_msg() # tweets.start_stream
 
 def consumer():
     import consumer
