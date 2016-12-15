@@ -37,12 +37,11 @@ echo $ZK_IP, KAFKA_IP
 docker run --rm ches/kafka kafka-topics.sh --create --topic [test] --replication-factor 1 --partitions 1 --zookeeper $ZK_IP:2181
 ```
 
-4. Build ```ingest.py``` and run ```producer``` and ```consumer```
+4. Build ```ingest.py``` and run ```producer``` and ```consumer``` in separate terminals
 
-Building Python environment with pykafka
+Building Python environment with pykafka and tweepy
 ```bash
 docker build -t ingest .
 ```
-Run a few tests: ` docker run ingest -t "hello world" ` should give you `hello world` back
-
-And `docker run ingest -r producer [consumer]` should give you `hello world, from producer [consumer]`
+Then run both `docker run ingest -r producer [consumer]` in separate terminals.
+TODO: need to setup tweepy and testing
