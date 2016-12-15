@@ -21,11 +21,12 @@ def main(argv):
 
 def producer():
     import producer
-    producer.produce_msg("172.17.0.3", b'tps_ops') # producer.start_stream
+    # TODO: set 9092 as default and add to ip_address
+    producer.produce_msg("172.17.0.3" + ":9092", "tps") # producer.start_stream
 
 def consumer():
     import consumer
-    consumer.consume_msg("172.17.0.3", b'tps_ops')
+    consumer.consume_msg("172.17.0.3"  + ":9092", "tps")
 
 if __name__ == '__main__':
     main(sys.argv[1:])

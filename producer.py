@@ -37,19 +37,14 @@ def start_stream():
         print("error") # print exception
         tps_streaming.disconnect()
 
-def producer_say_hello():
-    print("Hello World, from Producer")
-
 def produce_msg(ip_address, k_topic, *message):
     # TODO: set 9092 as default and add to ip_address
-    # TypeError: ("Producer.produce accepts a bytes object as message, but it got '%s'", <class 'str'>)
-    # TypeError: a bytes-like object is required, not 'str'
-    client = KafkaClient(hosts='172.17.0.3:9092') #b'172.17.0.3:9092', b'tps_ops'
-    topic = client.topics[b'tps_ops']
+    client = KafkaClient(hosts=ip_address)
+    topic = client.topics[str.encode(k_topic)]
 
     with topic.get_producer() as producer: # topic.get_producer(sync=True)
         if not message:
-            for i in range(4): # while not your_app.needs_stopping:
+            for i in range(400): # while not your_app.needs_stopping:
                 test_message = 'test message ' + str(i ** 2)
                 producer.produce(str.encode(test_message))
                 print(test_message)
