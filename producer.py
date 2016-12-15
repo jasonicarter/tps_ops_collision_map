@@ -11,12 +11,13 @@ access_secret = ''
 
 class TPSOpsStreamListener(StreamListener):
 
-    def on_data(self, data):
-        send_tweets(data)
-        return True
+    def on_status(self, status):
+        client = KafkaClient(hosts="172.17.0.3" + ":9092")
+        topic = client.topics[str.encode("test1")]
 
-    # def on_status(self, status):
-    #         send_msg(status)
+        with topic.get_producer() as producer:
+            tweet_text = status.text
+            producer.produce(str.encode(tweet_text))
 
     def on_error(self, status_code):
         if status_code == 420:
@@ -47,6 +48,5 @@ def produce_msg(ip_address, k_topic, *message):
             for i in range(400): # while not your_app.needs_stopping:
                 test_message = 'test message ' + str(i ** 2)
                 producer.produce(str.encode(test_message))
-                print(test_message)
         else:
             producer.produce(message)
